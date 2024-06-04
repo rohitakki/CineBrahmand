@@ -21,12 +21,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideBaseUrl(): String {
-        return "https://api.themoviedb.org/3/"
-    }
-
-    @Provides
-    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
@@ -64,7 +58,4 @@ object NetworkModule {
             )
         }
     }
-
-
-
 }
