@@ -1,6 +1,6 @@
 package com.cine.brahmand.api
 
-import com.cine.brahmand.models.ApiMovieListResponse
+import com.cine.brahmand.models.api.ApiMovieListResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

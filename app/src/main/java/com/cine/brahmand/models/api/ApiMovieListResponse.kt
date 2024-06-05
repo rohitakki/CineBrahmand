@@ -1,4 +1,4 @@
-package com.cine.brahmand.models
+package com.cine.brahmand.models.api
 
 import com.google.gson.annotations.SerializedName
 

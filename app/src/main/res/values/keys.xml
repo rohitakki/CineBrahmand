@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="api_key">eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzODM0ODY5ZWEwNGY3MDdlZTJkNDc3ZWMxMTA0YmUxYSIsInN1YiI6IjYxNjVmMmZmM2E5NjUwMDA4ZmIyYWFlZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xddsnNZSnkYnhSTalXZ5mO3Uo1J7cDycfp6KTScUFnc</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="api_key" tools:ignore="Typos">eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzODM0ODY5ZWEwNGY3MDdlZTJkNDc3ZWMxMTA0YmUxYSIsInN1YiI6IjYxNjVmMmZmM2E5NjUwMDA4ZmIyYWFlZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xddsnNZSnkYnhSTalXZ5mO3Uo1J7cDycfp6KTScUFnc</string>
 </resources>
