@@ -16,10 +16,26 @@ class MainViewModel @Inject constructor(private val movieRepository: MovieReposi
 
     val nowPlayingLiveData: LiveData<NetworkResult<List<Movie>>>
         get() = movieRepository.nowPlayingLiveData
+    val popularMoviesLiveData: LiveData<NetworkResult<List<Movie>>>
+        get() = movieRepository.popularMoviesLiveData
+    val topRatedMoviesLiveData: LiveData<NetworkResult<List<Movie>>>
+        get() = movieRepository.topRatedMoviesLiveData
 
     fun fetchNowPlaying() {
         viewModelScope.launch(Dispatchers.IO) {
-            movieRepository.fetchNowPlaying()
+            movieRepository.fetchNowPlaying(1)
+        }
+    }
+
+    fun fetchPopularMovies(page: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            movieRepository.getPopularMovies(page)
+        }
+    }
+
+    fun fetchTopRatedMovies(page: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            movieRepository.getTopRatedMovies(page)
         }
     }
 }

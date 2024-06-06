@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ApiMovie(
     val adult: Boolean?,
-    val id: Int?,
+    val id: Long,
     val overview: String?,
     val popularity: Double?,
     val title: String?,

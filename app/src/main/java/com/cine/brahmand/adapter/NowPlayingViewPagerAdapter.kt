@@ -22,7 +22,7 @@ class NowPlayingViewPagerAdapter @Inject constructor(): ListAdapter<Movie, NowPl
 
     override fun onBindViewHolder(holder: Holder, position: Int) = holder.bind(getItem(position))
 
-    override fun getItemId(position: Int) = getItem(position).id!!.toLong()
+    override fun getItemId(position: Int) = getItem(position).id
 
     inner class Holder(private var binding: ItemNowPlayingBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Movie) {

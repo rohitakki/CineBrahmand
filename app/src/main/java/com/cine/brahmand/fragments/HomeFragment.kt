@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.cine.brahmand.adapter.MovieRailAdapter
 import com.cine.brahmand.adapter.NowPlayingViewPagerAdapter
 import com.cine.brahmand.databinding.FragmentHomeBinding
 import com.cine.brahmand.models.simple.Movie
@@ -24,6 +26,10 @@ class HomeFragment : Fragment() {
 
     @Inject
     internal lateinit var pagerAdapter: NowPlayingViewPagerAdapter
+    @Inject
+    internal lateinit var popularAdapter: MovieRailAdapter
+    @Inject
+    internal lateinit var topRatedAdapter: MovieRailAdapter
 
     private val mainViewModel by viewModels<MainViewModel>()
 
@@ -38,8 +44,23 @@ class HomeFragment : Fragment() {
 
     private fun init() {
         setupViewPager()
+        setupRecyclerViews()
         setupObservers()
         mainViewModel.fetchNowPlaying()
+        mainViewModel.fetchPopularMovies(1)
+        mainViewModel.fetchTopRatedMovies(1)
+    }
+
+    private fun setupRecyclerViews() {
+        binding.popularRail.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = popularAdapter
+        }
+
+        binding.topRatedRail.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = topRatedAdapter
+        }
     }
 
     private fun setupObservers() {
@@ -56,6 +77,42 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        mainViewModel.popularMoviesLiveData.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is NetworkResult.Success -> {
+                    displayPopularMovies(result.data)
+                }
+                is NetworkResult.Loading -> {
+                    showLoading()
+                }
+                is NetworkResult.Error -> {
+                    showError(result.errorMessage)
+                }
+            }
+        }
+
+        mainViewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is NetworkResult.Success -> {
+                    displayTopRatedMovies(result.data)
+                }
+                is NetworkResult.Loading -> {
+                    showLoading()
+                }
+                is NetworkResult.Error -> {
+                    showError(result.errorMessage)
+                }
+            }
+        }
+    }
+
+    private fun displayPopularMovies(data: List<Movie>?) {
+        popularAdapter.submitList(data)
+    }
+
+    private fun displayTopRatedMovies(data: List<Movie>?) {
+        topRatedAdapter.submitList(data)
     }
 
     private fun showError(errorMessage: String?) {
