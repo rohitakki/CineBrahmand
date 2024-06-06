@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cine.brahmand.R
 import com.cine.brahmand.adapter.MovieRailAdapter
 import com.cine.brahmand.adapter.NowPlayingViewPagerAdapter
 import com.cine.brahmand.databinding.FragmentHomeBinding
@@ -33,7 +36,7 @@ class HomeFragment : Fragment() {
     @Inject
     internal lateinit var upcomingAdapter: MovieRailAdapter
 
-    private val mainViewModel by viewModels<MainViewModel>()
+    private val mainViewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +51,10 @@ class HomeFragment : Fragment() {
         setupViewPager()
         setupRecyclerViews()
         setupObservers()
+        makeApiCalls()
+    }
+
+    private fun makeApiCalls() {
         mainViewModel.fetchNowPlaying()
         mainViewModel.fetchPopularMovies(1)
         mainViewModel.fetchTopRatedMovies(1)
@@ -59,16 +66,19 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = popularAdapter
         }
+        popularAdapter.setOnClick { id -> showMovieDetails(id) }
 
         binding.topRatedRail.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = topRatedAdapter
         }
+        topRatedAdapter.setOnClick { id -> showMovieDetails(id) }
 
         binding.upcomingRail.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = upcomingAdapter
         }
+        upcomingAdapter.setOnClick { id -> showMovieDetails(id) }
     }
 
     private fun setupObservers() {
@@ -159,7 +169,14 @@ class HomeFragment : Fragment() {
         binding.viewPager.apply {
             adapter = pagerAdapter
         }
+        pagerAdapter.setOnClick { id -> showMovieDetails(id) }
         TabLayoutMediator(binding.indicatorTabLayout, binding.viewPager){_,_ -> }.attach()
+    }
+
+    private fun showMovieDetails(id: Long) {
+        val bundle = Bundle()
+        bundle.putLong(MovieDetailsFragment.MOVIE_ID, id)
+        findNavController().navigate(R.id.action_homeFragment_to_movieDetailsFragment, bundle)
     }
 
     override fun onDestroyView() {

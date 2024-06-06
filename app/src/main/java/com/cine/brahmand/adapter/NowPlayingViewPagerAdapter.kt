@@ -15,6 +15,12 @@ class NowPlayingViewPagerAdapter @Inject constructor(): ListAdapter<Movie, NowPl
         setHasStableIds(true)
     }
 
+    private var onClick: ((Long) -> Unit)? = null
+
+    fun setOnClick(onClick: (Long) -> Unit) {
+        this.onClick = onClick
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemNowPlayingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
@@ -27,6 +33,7 @@ class NowPlayingViewPagerAdapter @Inject constructor(): ListAdapter<Movie, NowPl
     inner class Holder(private var binding: ItemNowPlayingBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Movie) {
             binding.movie = item
+            binding.root.setOnClickListener { onClick?.invoke(item.id) }
         }
     }
 

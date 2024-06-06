@@ -33,7 +33,11 @@
         android:id="@+id/movieDetailsFragment"
         android:name="com.cine.brahmand.fragments.MovieDetailsFragment"
         android:label="fragment_movie_details"
-        tools:layout="@layout/fragment_movie_details" />
+        tools:layout="@layout/fragment_movie_details" >
+        <action
+            android:id="@+id/action_movieDetailsFragment_self"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/filteredMoviesListFragment"
         android:name="com.cine.brahmand.fragments.FilteredMoviesListFragment"

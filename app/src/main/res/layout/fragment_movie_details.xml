@@ -1,15 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.MovieDetailsFragment">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="movieDetails"
+            type="com.cine.brahmand.models.simple.MovieDetails" />
+    </data>
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:text="Movie Details Fragment" />
+        android:background="@color/dark_background_purple"
+        tools:context=".fragments.MovieDetailsFragment">
 
-</FrameLayout>
+        <ScrollView
+            android:id="@+id/mainScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/posterImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="462dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:scaleType="centerCrop"
+                    carouselImageFromUrl="@{movieDetails.posterUrl}"
+                    tools:src="@tools:sample/avatars" />
+
+                <View
+                    android:id="@+id/gradient_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="@id/posterImage"
+                    app:layout_constraintEnd_toEndOf="@id/posterImage"
+                    app:layout_constraintTop_toTopOf="@id/posterImage"
+                    app:layout_constraintBottom_toBottomOf="@id/posterImage"
+                    android:background="@drawable/main_gradient" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/play_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_play_24"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintBottom_toBottomOf="@id/timeRatingYear"
+                    app:layout_constraintEnd_toEndOf="@id/gradient_view" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/movieTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="26sp"
+                    android:fontFamily="@font/poppins_bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/play_button"
+                    app:layout_constraintBottom_toTopOf="@id/timeRatingYear"
+                    android:textColor="@color/white"
+                    android:paddingHorizontal="24dp"
+                    android:text="@{movieDetails.title}"
+                    tools:text="Los Miserables"
+                    android:maxLines="2" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/timeRatingYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/fade_text"
+                    android:textAllCaps="true"
+                    android:text="@{movieDetails.timeYearRatingString}"
+                    tools:text="1H 20MIN    13+    2012"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="48dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/posterImage" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/timeRatingYear"
+                    android:textColor="@color/white"
+                    android:paddingHorizontal="24dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@{movieDetails.overview}"
+                    tools:text = "Lorem ipsum dolor sit amet consectetur. Eget dictum est penatibus eget nunc. Enim pellentesque venenatis enim. Lorem ipsum dolor sit amet consectetur." />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/genreText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/fade_text"
+                    android:text="@{movieDetails.genre}"
+                    tools:text="Action     Adventure     Sci-Fi"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="48dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/summary" />
+
+                <TextView
+                    android:id="@+id/similarHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/white"
+                    android:text="@string/similar"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/genreText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/similarMoviesRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/similarHeading"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="24dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/light_arrow_back" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

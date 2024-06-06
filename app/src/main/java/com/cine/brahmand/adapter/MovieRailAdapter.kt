@@ -13,6 +13,15 @@ import javax.inject.Inject
 
 class MovieRailAdapter @Inject constructor(): ListAdapter<Movie, MovieRailAdapter.Holder>(diffUtilCallback) {
 
+    init {
+        setHasStableIds(true)
+    }
+
+    private var onClick: ((Long) -> Unit)? = null
+
+    fun setOnClick(onClick: (Long) -> Unit) {
+        this.onClick = onClick
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemMovieRailsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
@@ -32,6 +41,7 @@ class MovieRailAdapter @Inject constructor(): ListAdapter<Movie, MovieRailAdapte
                 binding.endGap.visibility = View.VISIBLE
             }
             binding.movie = item
+            binding.posterImage.setOnClickListener { onClick?.invoke(item.id) }
         }
     }
 
