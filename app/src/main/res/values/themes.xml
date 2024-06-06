@@ -4,8 +4,8 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimaryDark">@color/dark_background_purple</item>
-        <item name="colorPrimary">@color/button_purple</item>
-        <item name="colorAccent">@color/button_purple</item>
+        <item name="colorPrimary">@color/explore_button_purple</item>
+        <item name="colorAccent">@color/explore_button_purple</item>
     </style>
 
     <style name="Theme.CineBrahmand" parent="Base.Theme.CineBrahmand" />

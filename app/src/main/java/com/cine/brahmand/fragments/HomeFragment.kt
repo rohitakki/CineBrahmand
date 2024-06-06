@@ -30,6 +30,8 @@ class HomeFragment : Fragment() {
     internal lateinit var popularAdapter: MovieRailAdapter
     @Inject
     internal lateinit var topRatedAdapter: MovieRailAdapter
+    @Inject
+    internal lateinit var upcomingAdapter: MovieRailAdapter
 
     private val mainViewModel by viewModels<MainViewModel>()
 
@@ -49,6 +51,7 @@ class HomeFragment : Fragment() {
         mainViewModel.fetchNowPlaying()
         mainViewModel.fetchPopularMovies(1)
         mainViewModel.fetchTopRatedMovies(1)
+        mainViewModel.fetchUpcomingMovies(1)
     }
 
     private fun setupRecyclerViews() {
@@ -60,6 +63,11 @@ class HomeFragment : Fragment() {
         binding.topRatedRail.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = topRatedAdapter
+        }
+
+        binding.upcomingRail.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = upcomingAdapter
         }
     }
 
@@ -105,6 +113,24 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        mainViewModel.upcomingMoviesLiveData.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is NetworkResult.Success -> {
+                    displayUpcomingMovies(result.data)
+                }
+                is NetworkResult.Loading -> {
+                    showLoading()
+                }
+                is NetworkResult.Error -> {
+                    showError(result.errorMessage)
+                }
+            }
+        }
+    }
+
+    private fun displayUpcomingMovies(data: List<Movie>?) {
+        upcomingAdapter.submitList(data)
     }
 
     private fun displayPopularMovies(data: List<Movie>?) {

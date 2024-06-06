@@ -16,6 +16,7 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
     private val _nowPlayingLiveData: MutableLiveData<NetworkResult<List<Movie>>> = MutableLiveData()
     private val _popularMoviesLiveData: MutableLiveData<NetworkResult<List<Movie>>> = MutableLiveData()
     private val _topRatedMoviesLiveData: MutableLiveData<NetworkResult<List<Movie>>> = MutableLiveData()
+    private val _upcomingMoviesLiveData: MutableLiveData<NetworkResult<List<Movie>>> = MutableLiveData()
 
     val nowPlayingLiveData: LiveData<NetworkResult<List<Movie>>>
         get() = _nowPlayingLiveData
@@ -23,6 +24,8 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
         get() = _popularMoviesLiveData
     val topRatedMoviesLiveData: LiveData<NetworkResult<List<Movie>>>
         get() = _topRatedMoviesLiveData
+    val upcomingMoviesLiveData: LiveData<NetworkResult<List<Movie>>>
+        get() = _upcomingMoviesLiveData
 
     suspend fun fetchNowPlaying(page: Int) {
         withContext(Dispatchers.Main) {
@@ -124,6 +127,41 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
         } else {
             withContext(Dispatchers.Main) {
                 _topRatedMoviesLiveData.value = NetworkResult.Error("Something Went Wrong!!")
+            }
+        }
+    }
+
+    suspend fun getUpcomingMovies(page: Int) {
+        withContext(Dispatchers.Main) {
+            _upcomingMoviesLiveData.value = NetworkResult.Loading()
+        }
+        val response = movieService.getUpcoming(page)
+        if (response.isSuccessful && response.body() != null && !response.body()?.results.isNullOrEmpty()) {
+            val movieList: ArrayList<Movie> = arrayListOf()
+            response.body()?.results?.forEachIndexed { index, apiMovie ->
+                apiMovie?.let {
+                    movieList.add(
+                        Movie(
+                            title = apiMovie.title,
+                            overview = apiMovie.overview,
+                            posterUrl = buildImageUrl(apiMovie.posterPath ?: ""),
+                            backdropUrl = buildImageUrl(apiMovie.backdropPath ?: ""),
+                            id = apiMovie.id,
+                            position = if (index == 0) Position.START else if (index == movieList.size-1) Position.END else Position.MIDDLE
+                        )
+                    )
+                }
+            }
+            withContext(Dispatchers.Main) {
+                _upcomingMoviesLiveData.value = NetworkResult.Success(movieList)
+            }
+        } else if (response.errorBody() != null) {
+            withContext(Dispatchers.Main) {
+                _upcomingMoviesLiveData.value = NetworkResult.Error(response.message())
+            }
+        } else {
+            withContext(Dispatchers.Main) {
+                _upcomingMoviesLiveData.value = NetworkResult.Error("Something Went Wrong!!")
             }
         }
     }

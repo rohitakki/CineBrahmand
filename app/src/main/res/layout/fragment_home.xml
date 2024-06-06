@@ -85,12 +85,48 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/topRatedHeading"
                 app:layout_constraintEnd_toEndOf="parent" />
+            
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/exploreButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cornerRadius="0dp"
+                android:text="@string/explore"
+                android:fontFamily="@font/poppins_semibold"
+                android:layout_marginTop="24dp"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="56dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/topRatedRail" />
+
+            <TextView
+                android:id="@+id/upcomingHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/white"
+                android:text="@string/upcoming"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/exploreButton" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/upcomingRail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/upcomingHeading"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="96dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/topRatedRail" />
+                app:layout_constraintTop_toBottomOf="@id/upcomingRail" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

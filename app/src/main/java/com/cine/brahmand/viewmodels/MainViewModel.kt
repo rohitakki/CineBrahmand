@@ -20,6 +20,8 @@ class MainViewModel @Inject constructor(private val movieRepository: MovieReposi
         get() = movieRepository.popularMoviesLiveData
     val topRatedMoviesLiveData: LiveData<NetworkResult<List<Movie>>>
         get() = movieRepository.topRatedMoviesLiveData
+    val upcomingMoviesLiveData: LiveData<NetworkResult<List<Movie>>>
+        get() = movieRepository.upcomingMoviesLiveData
 
     fun fetchNowPlaying() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -36,6 +38,12 @@ class MainViewModel @Inject constructor(private val movieRepository: MovieReposi
     fun fetchTopRatedMovies(page: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             movieRepository.getTopRatedMovies(page)
+        }
+    }
+
+    fun fetchUpcomingMovies(page: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            movieRepository.getUpcomingMovies(page)
         }
     }
 }
