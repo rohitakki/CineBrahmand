@@ -1,6 +1,7 @@
 package com.cine.brahmand.models.simple
 
 data class Movie(
+    var id: Int? = null,
     var title: String? = null,
     var overview: String? = null,
     var genre: String? = null,
