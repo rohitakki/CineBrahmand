@@ -13,7 +13,7 @@ fun buildTimeYearAndRatingString(movieDetailsApiResponse: MovieDetailsApiRespons
         stringBuilder.append("${hours}H ${minutes}MIN    ")
     }
     if (movieDetailsApiResponse.voteAverage != null) {
-        stringBuilder.append("★ ${String.format("%.1f", movieDetailsApiResponse.voteAverage)}    ")
+        stringBuilder.append("★ ${String.format("%.1f", movieDetailsApiResponse.voteAverage)}     ")
     }
     if (!movieDetailsApiResponse.releaseDate.isNullOrBlank()) {
         stringBuilder.append(movieDetailsApiResponse.releaseDate.substring(0, 4))

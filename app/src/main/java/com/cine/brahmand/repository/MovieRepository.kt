@@ -44,7 +44,7 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
         val response = movieService.getNowPlaying(page)
         if (response.isSuccessful && response.body() != null && !response.body()?.results.isNullOrEmpty()) {
             val movieList: ArrayList<Movie> = arrayListOf()
-            response.body()?.results?.subList(0, 5)?.forEach { apiMovie ->
+            response.body()?.results?.subList(0, 6)?.forEach { apiMovie ->
                 apiMovie?.let {
                     movieList.add(
                         Movie(
